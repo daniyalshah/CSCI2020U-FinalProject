@@ -9,9 +9,12 @@
 
 apply plugin: 'java'
 
+
 apply plugin: 'application'
 
 mainClassName = 'SimpleTest'
+applicationName = 'CSVDemo'
+
 
 repositories {
     jcenter()
