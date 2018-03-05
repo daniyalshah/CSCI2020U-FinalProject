@@ -27,7 +27,7 @@ public class Controller implements Initializable{
     @FXML private TableColumn<TestFile, String> spamProb;
     @FXML private TableColumn<TestFile, String> actualClassColumn;
 
-    //calling initialize package
+    //calling override initialize method from Initializable
     public void initialize(URL location, ResourceBundle resources) {
 
         //using observable data
