@@ -10,7 +10,6 @@ import java.io.*;
 import java.util.*;
 
 public class Counter {
-    //private Optimize optimize;
 
     private int numberHam;
     private int numberSpam;
@@ -121,9 +120,6 @@ public class Counter {
     }
 
     public void calcProb(){
-        //optimize = new Optimize();
-        //optimize.optFreqMap(trainSpamFrequency,5);
-
         Set<String> keys = trainHamFrequency.keySet();
         Iterator<String> keyIterator = keys.iterator();
         while (keyIterator.hasNext()) {
