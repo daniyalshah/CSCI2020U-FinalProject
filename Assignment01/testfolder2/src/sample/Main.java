@@ -1,7 +1,7 @@
 /*
 Assignment01 - Main.java
 Mustafa Al-Azzawe 100617392
-Daniyal Syed Shah 100622173
+Syed Daniyal Shah 100622173
 */
 
 package sample;
