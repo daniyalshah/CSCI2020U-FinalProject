@@ -20,10 +20,12 @@ public class Main extends Application {
 
     public void start(Stage primaryStage) throws Exception{
 
+        //loading the fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("sample.fxml"));
         Parent root = loader.load();
         Controller controller = loader.getController();
 
+        //get instance of controller
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Choose a Directory");
         directoryChooser.setInitialDirectory(new File("."));
@@ -32,6 +34,7 @@ public class Main extends Application {
         File trainDir = new File(currDirectory + "/train");
         File testDir = new File(currDirectory + "/test");
 
+        // instance of Counter class
         Counter w = new Counter();
         w.searchDirectory(trainDir);
         w.calcProb();

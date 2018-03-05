@@ -19,6 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class Controller implements Initializable{
 
+    //variables for fxml, this class shaped fxml class
     @FXML private TableView<TestFile> table;
     @FXML private TextField accuracyColumn;
     @FXML private TextField precisionColumn;
@@ -26,8 +27,10 @@ public class Controller implements Initializable{
     @FXML private TableColumn<TestFile, String> spamProb;
     @FXML private TableColumn<TestFile, String> actualClassColumn;
 
+    //calling initialize package
     public void initialize(URL location, ResourceBundle resources) {
 
+        //using observable data
         ObservableList emails = Inbox.getEmails();
 
         accuracyColumn.setText("Accuracy");
