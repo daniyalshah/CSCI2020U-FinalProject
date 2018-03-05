@@ -9,7 +9,7 @@
     <center>
         <TableView fx:id="table">
             <columns>
-                <TableColumn fx:id="file_column" text="File" prefWidth="350">
+                <TableColumn fx:id="files_column" text="File" prefWidth="350">
                 </TableColumn>
 
 
@@ -30,10 +30,10 @@
             </padding>
             <children>
                 <Label text="Accuracy: " GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="accuracy_field" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="accuracy_column" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                 <Label text="Precision: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="precision_field" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="precision_column" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
             </children>
         </GridPane>

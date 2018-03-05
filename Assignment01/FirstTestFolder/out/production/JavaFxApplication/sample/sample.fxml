@@ -5,19 +5,19 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<BorderPane fx:controller="Project.Controller" xmlns:fx="http://javafx.com/fxml">
+<BorderPane fx:controller="sample.Controller" xmlns:fx="http://javafx.com/fxml">
     <center>
         <TableView fx:id="table">
             <columns>
-                <TableColumn fx:id="file_column" text="File" prefWidth="400">
+                <TableColumn fx:id="files_column" text="File" prefWidth="350">
                 </TableColumn>
 
 
-                <TableColumn fx:id="actual_class" text="Actual Class" prefWidth="150">
+                <TableColumn fx:id="actual_class" text="Actual Class" prefWidth="120">
                 </TableColumn>
 
 
-                <TableColumn fx:id="spam_prob" text="Spam Probability" prefWidth="200">
+                <TableColumn fx:id="spam_prob" text="Spam Probability" prefWidth="150">
                 </TableColumn>
             </columns>
         </TableView>
@@ -30,10 +30,10 @@
             </padding>
             <children>
                 <Label text="Accuracy: " GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                <TextField fx:id="accuracy_field" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="accuracy_column" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
                 <Label text="Precision: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                <TextField fx:id="precision_field" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="precision_column" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
             </children>
         </GridPane>
