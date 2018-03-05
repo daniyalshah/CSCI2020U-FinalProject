@@ -7,4 +7,9 @@ Daniyal Syed Shah
 100622173
 
 
+Run Process:
+
+Run through intellij, choose data directory.
+
+
 
