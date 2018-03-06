@@ -11,7 +11,7 @@ import java.util.*;
 
 public class Counter {
 
-    //#number of files being stored into
+    //number of files being stored into
     private int numberHam;
     private int numberSpam;
 
@@ -86,7 +86,6 @@ public class Counter {
     }
 
     //reads words from test file, saves to map
-
     public void searchTest(File file) throws IOException {
         Scanner scanner = new Scanner(file);
         double probWordSpam = 0;

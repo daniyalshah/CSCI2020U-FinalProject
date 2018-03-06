@@ -11,20 +11,22 @@ import java.util.*;
 
 public class Counter {
 
+    //number of files being stored into
     private int numberHam;
     private int numberSpam;
 
-
+    //map hold while training
     private Map<String,Integer> trainHamFrequency;
     private Map<String,Integer> trainSpamFrequency;
 
+    //map hold probabilities
     private Map<String,Double> probFileSpam;
     private Map<String,Double> probWordSpam;
     private Map<String,Double> probWordHam;
 
+    //map hold while testing
     private Map<String,Double> testHamProb;
     private Map<String,Double> testSpamProb;
-
 
     public Counter() {
         trainHamFrequency = new TreeMap<>();
@@ -41,6 +43,7 @@ public class Counter {
         numberSpam = 0;
     }
 
+    //searches all directories, and if found a file not in directory, sends to searchTrain
     public void searchDirectory(File file)throws IOException{
         if (file.isDirectory()) {
             File[] filesInDir = file.listFiles();
@@ -55,12 +58,13 @@ public class Counter {
                 searchTest(file);
         }
     }
-
+    //reads words from train file, saves to the map we made on top
     public void searchTrain(File file) throws IOException {
 
         Scanner scanner = new Scanner(file);
         if(file.getAbsolutePath().contains("train/ham")) {
             numberHam++;
+            //read file word by word
             while (scanner.hasNext()) {
                 String word = scanner.next().toLowerCase();
                 if (isWord(word)) {
@@ -69,6 +73,7 @@ public class Counter {
             }
 
         }
+        //if current file in spam folder
         else if(file.getAbsolutePath().contains("train/spam")) {
             numberSpam++;
             while (scanner.hasNext()) {
@@ -80,6 +85,7 @@ public class Counter {
         }
     }
 
+    //reads words from test file, saves to map
     public void searchTest(File file) throws IOException {
         Scanner scanner = new Scanner(file);
         double probWordSpam = 0;
@@ -88,6 +94,7 @@ public class Counter {
             if (isWord(word) && probFileSpam.containsKey(word))
                 probWordSpam += calcSpamProb(word);
         }
+        //calculate and display
         double fileIsSpam = 1/(1+(Math.pow(Math.E,probWordSpam)));
 
         if(file.getAbsolutePath().contains("test/ham")) {
@@ -100,16 +107,17 @@ public class Counter {
         }
     }
 
-
+    //increment duplicate words in map
     private void wordCount(String word, Map<String,Integer> map) {
         if (map.containsKey(word)) {
             int oldCount = map.get(word);
             map.put(word, oldCount+1);
+            //else add to map
         } else {
             map.put(word, 1);
         }
     }
-
+    //check if word is word
     private boolean isWord(String token) {
         String pattern = "^[a-zA-Z]*$";
         if (token.matches(pattern)) {
@@ -120,6 +128,8 @@ public class Counter {
     }
 
     public void calcProb(){
+
+        //calculate and store probability that word in trainHamFrequency map appears in ham file into probWordHam
         Set<String> keys = trainHamFrequency.keySet();
         Iterator<String> keyIterator = keys.iterator();
         while (keyIterator.hasNext()) {
@@ -127,7 +137,7 @@ public class Counter {
             int count = trainHamFrequency.get(key);
             probWordHam.put(key,(double)count/numberHam);
         }
-
+        //same concept as above except word in trainSpamFrequency
         keys = trainSpamFrequency.keySet();
         keyIterator = keys.iterator();
         while (keyIterator.hasNext()) {
@@ -136,6 +146,7 @@ public class Counter {
             probWordSpam.put(key,(double)count/numberSpam);
         }
 
+        //calculate probability that a file is spam given a word in spam file
         keys = probWordSpam.keySet();
         keyIterator = keys.iterator();
         while (keyIterator.hasNext()) {
@@ -155,6 +166,7 @@ public class Counter {
 
 
     public double calcAccuracy(){
+        //calculate accuracy
         int correct = 0;
         Set<String> keys = testHamProb.keySet();
         Iterator<String> keyIterator = keys.iterator();
@@ -180,7 +192,7 @@ public class Counter {
         return accuracy;
     }
 
-
+    //calculate precision
     public double calcPrecision(){
         double precision;
         int truePos = 0;

@@ -5,10 +5,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <center>
@@ -29,26 +33,45 @@
     </center>
 
     <bottom>
-        <GridPane alignment="CENTER_LEFT" hgap="10" prefHeight="64.0" prefWidth="622.0" style="-fx-background-color: #FFD6D1;" vgap="10">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
+        <AnchorPane>
             <children>
-                <Label text="Accuracy: " GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <TextField fx:id="accuracyColumn" editable="false" prefHeight="26.0" prefWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <GridPane alignment="CENTER_LEFT" hgap="10" prefHeight="91.0" prefWidth="622.0" style="-fx-background-color: #FFD6D1;" vgap="10">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+                    <children>
+                        <Label text="Accuracy: " GridPane.columnIndex="0" GridPane.rowIndex="0">
+                            <font>
+                                <Font name="Ubuntu" size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="accuracyColumn" editable="false" prefHeight="26.0" prefWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                <Label text="Precision: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <TextField fx:id="precisionColumn" editable="false" prefHeight="26.0" prefWidth="110.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Precision: " GridPane.columnIndex="2">
+                            <font>
+                                <Font name="Ubuntu" size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="precisionColumn" editable="false" prefHeight="26.0" prefWidth="136.0" GridPane.columnIndex="3" />
 
+                    </children>
+                    <columnConstraints>
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                        <ColumnConstraints />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                    </rowConstraints>
+                </GridPane>
+                <ImageView fitHeight="80.0" fitWidth="192.0" layoutX="334.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" style="-fx-translate-x: 95px; -fx-translate-y: -5px;">
+                    <image>
+                        <Image url="@../images/mango.png" />
+                    </image>
+                </ImageView>
             </children>
-         <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
-        </GridPane>
+        </AnchorPane>
     </bottom>
 </BorderPane>
