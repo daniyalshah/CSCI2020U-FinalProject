@@ -45,6 +45,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Mangoes Spam Detector");
         primaryStage.setScene(new Scene(root, 620, 650));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

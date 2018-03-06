@@ -14,7 +14,6 @@ public class Counter {
     private int numberHam;
     private int numberSpam;
 
-
     private Map<String,Integer> trainHamFrequency;
     private Map<String,Integer> trainSpamFrequency;
 
@@ -24,7 +23,6 @@ public class Counter {
 
     private Map<String,Double> testHamProb;
     private Map<String,Double> testSpamProb;
-
 
     public Counter() {
         trainHamFrequency = new TreeMap<>();
