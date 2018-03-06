@@ -193,7 +193,7 @@ public class Counter {
         return accuracy;
     }
 
-    //calculate precision 
+    //calculate precision
     public double calcPrecision(){
         double precision;
         int truePos = 0;
