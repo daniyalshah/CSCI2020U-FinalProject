@@ -15,5 +15,7 @@ Run Process:
 
 Please run both through intellij, choose data directory and let our Mangoes Spam Detector do the rest.
 
+** this assignment was completed and tested in linux, may not work in windows. **
+
 
 
