@@ -4,15 +4,14 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.control.TablePosition;
 import java.io.*;
+import javafx.event.EventHandler;
 import java.net.Socket;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -40,16 +39,26 @@ public class Client extends Application {
         BorderPane layout = new BorderPane();
 
         //Buttons
-        Button upload = new Button("Upload");
-        Button download = new Button("Download");
+        Button uploadB = new Button("Upload");
+        Button downloadB = new Button("Download");
 
-        //
+        //Button Commands for sending filename to the cell in server & client section
+        uploadB.setOnAction(e -> {
+            TablePosition tablePosition = clientTable.getSelectionModel().getSelectedCells().get(0);
+            int row = tablePosition.getRow();
+            Data dataRecord = clientTable.getItems().get(row);
+            TableColumn column = tablePosition.getTableColumn();
+            String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
+            System.out.println("You've selected:" + fileName);
+
+        });
+
 
         //Setting up GridPane
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(10, 10, 10, 10));
-        gridPane.add(upload, 0, 0);
-        gridPane.add(download, 1, 0);
+        gridPane.add(uploadB, 0, 0);
+        gridPane.add(downloadB, 1, 0);
         layout.setTop(gridPane);
 
         //Setting up TableView/Column for Client (left side)
@@ -78,26 +87,6 @@ public class Client extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    /*
-    public class Data {
-        private File selectedFile;
-        private String fileName;
-
-        public Data(String fileName) {
-            this.fileName = fileName;
-        }
-        public Data(File selectedFile) {
-            this.selectedFile = selectedFile;
-            this.fileName = selectedFile.getName();
-        }
-        public String getFileName() {
-            return fileName;
-        }
-        public File getSelectedFile() {
-            return selectedFile;
-        }
-    }
-    */
 
     public static void main(String[] args) {
         cmdArgs = args;
