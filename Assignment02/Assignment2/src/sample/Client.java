@@ -31,6 +31,11 @@ public class Client extends Application {
     private TableColumn<Data, String> serverCol;
     private Socket clientSocket;
     private BufferedReader reader;
+    private PrintWriter writer;
+    private File myDir;
+    private BufferedReader fileIn;
+
+
 
 
     @Override
@@ -43,27 +48,6 @@ public class Client extends Application {
         //Buttons
         Button uploadB = new Button("Upload");
         Button downloadB = new Button("Download");
-
-        //Button Commands for sending filename to the cell in server or client section
-        //Upload Part
-        uploadB.setOnAction(e -> {
-            TablePosition tablePosition = clientTable.getSelectionModel().getSelectedCells().get(0);
-            int row = tablePosition.getRow();
-            Data dataRecord = clientTable.getItems().get(row);
-            TableColumn column = tablePosition.getTableColumn();
-            String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
-            System.out.println("You've selected:" + fileName);
-        });
-
-        //Download Part
-        downloadB.setOnAction(e -> {
-            TablePosition tablePosition = serverTable.getSelectionModel().getSelectedCells().get(0);
-            int row = tablePosition.getRow();
-            Data dataRecord = serverTable.getItems().get(row);
-            TableColumn column = tablePosition.getTableColumn();
-            String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
-            System.out.println("You've selected:" + fileName);
-        });
 
         //Setting up GridPane
         GridPane gridPane = new GridPane();
@@ -90,6 +74,27 @@ public class Client extends Application {
 
         layout.setRight(clientTable);
 
+        //Button Commands for sending filename to the cell in server or client section
+        //Upload Part
+        uploadB.setOnAction(e -> {
+            TablePosition tablePosition = clientTable.getSelectionModel().getSelectedCells().get(0);
+            int row = tablePosition.getRow();
+            Data dataRecord = clientTable.getItems().get(row);
+            TableColumn column = tablePosition.getTableColumn();
+            String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
+            System.out.println("You've selected:" + fileName);
+        });
+
+        //Download Part
+        downloadB.setOnAction(e -> {
+            TablePosition tablePosition = serverTable.getSelectionModel().getSelectedCells().get(0);
+            int row = tablePosition.getRow();
+            Data dataRecord = serverTable.getItems().get(row);
+            TableColumn column = tablePosition.getTableColumn();
+            String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
+            System.out.println("You've selected:" + fileName);
+        });
+
         //Finish up the layout
         layer.getChildren().addAll(layout);
 
@@ -97,15 +102,24 @@ public class Client extends Application {
         Scene scene = new Scene(layer, 600, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        serverConnect();
+
     }
-    //method for server
+
+    //method during/when connected
     private void serverConnect(){
         try {
             clientSocket = new Socket("localhost", 9999);
-            in = new BufferedReader()
+            reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            writer = new PrintWriter(clientSocket.getOutputStream());
+            System.out.println("Connected to server");
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
+    //main method
     public static void main(String[] args) {
         cmdArgs = args;
         launch(args);
