@@ -29,6 +29,8 @@ public class Client extends Application {
     private TableView<Data> serverTable;
     private TableColumn<Data, String> clientCol;
     private TableColumn<Data, String> serverCol;
+    private Socket clientSocket;
+    private BufferedReader reader;
 
 
     @Override
@@ -42,7 +44,8 @@ public class Client extends Application {
         Button uploadB = new Button("Upload");
         Button downloadB = new Button("Download");
 
-        //Button Commands for sending filename to the cell in server & client section
+        //Button Commands for sending filename to the cell in server or client section
+        //Upload Part
         uploadB.setOnAction(e -> {
             TablePosition tablePosition = clientTable.getSelectionModel().getSelectedCells().get(0);
             int row = tablePosition.getRow();
@@ -50,9 +53,17 @@ public class Client extends Application {
             TableColumn column = tablePosition.getTableColumn();
             String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
             System.out.println("You've selected:" + fileName);
-
         });
 
+        //Download Part
+        downloadB.setOnAction(e -> {
+            TablePosition tablePosition = serverTable.getSelectionModel().getSelectedCells().get(0);
+            int row = tablePosition.getRow();
+            Data dataRecord = serverTable.getItems().get(row);
+            TableColumn column = tablePosition.getTableColumn();
+            String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
+            System.out.println("You've selected:" + fileName);
+        });
 
         //Setting up GridPane
         GridPane gridPane = new GridPane();
@@ -86,6 +97,13 @@ public class Client extends Application {
         Scene scene = new Scene(layer, 600, 500);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+    //method for server
+    private void serverConnect(){
+        try {
+            clientSocket = new Socket("localhost", 9999);
+            in = new BufferedReader()
+        }
     }
 
     public static void main(String[] args) {
