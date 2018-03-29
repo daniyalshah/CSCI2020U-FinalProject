@@ -19,7 +19,7 @@ public class Server {
 
     public void server() {
         //get files from server folder
-        serverDirectory = new File("\\serverFiles");
+        serverDirectory = new File("C:\\Users\\Daniyal\\Desktop\\serverFiles");
 
         // start connection
         try {
@@ -135,8 +135,8 @@ public class Server {
                 }
                 out.println("\0");
                 out.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
 
         }

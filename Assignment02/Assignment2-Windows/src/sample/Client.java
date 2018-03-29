@@ -206,7 +206,7 @@ public class Client extends Application {
     //left side of data table with files
     private void getClientFiles () {
         ObservableList<Data> clientFiles = FXCollections.observableArrayList();
-        myDir = new File("\\clientFiles");
+        myDir = new File("C:\\Users\\Daniyal\\Desktop\\clientFiles");
         File[] fileList = myDir.listFiles();
         for (File entry : fileList) {
             if (entry.isFile()) {
