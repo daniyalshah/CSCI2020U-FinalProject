@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.TablePosition;
 import java.io.*;
 import javafx.event.EventHandler;
+import java.net.DatagramSocket;
 import java.net.Socket;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -21,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import net.miginfocom.layout.Grid;
+import org.apache.commons.httpclient.util.IdleConnectionHandler;
 
 
 public class Client extends Application {
@@ -31,9 +33,10 @@ public class Client extends Application {
     private TableColumn<Data, String> serverCol;
     private Socket clientSocket;
     private BufferedReader reader;
-    private PrintWriter writer;
+    private PrintWriter writer, writer1;
     private File myDir;
     private BufferedReader fileIn;
+    private ConnectionHandler connectionHandler;
 
 
 
@@ -103,8 +106,39 @@ public class Client extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        //Start everything
         serverConnect();
+        ConnectionHandler conectionHandler = new ConnectionHandler();
+        Thread thread = new Thread(conectionHandler);
+        thread.start();
+        getClientFiles();
 
+    }
+    //Get server files to the right side
+    public class ConnectionHandler implements Runnable {
+        @Override
+        public void run() {
+            getServerFilesList();
+        }
+        public synchronized void getServerFilesList(){
+            ObservableList<Data> serverFiles = FXCollections.observableArrayList();
+            String fileName;
+            try {
+                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
+                writer.println("DIRECTORY");
+                writer.flush();
+                System.out.println("testing linkage");
+                while ((fileName = reader.readLine()) != null) {
+                    if (fileName.equals("/0")) {
+                        break;
+                    }
+                    serverFiles.add(new Data(fileName));
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            serverTable.setItems(serverFiles);
+        }
     }
 
     //method during/when connected
@@ -116,6 +150,19 @@ public class Client extends Application {
             System.out.println("Connected to server");
         } catch (IOException exception) {
             exception.printStackTrace();
+        }
+    }
+
+    //left side of data table with files
+    private void getClientFiles () {
+        ObservableList<Data> clientFiles = FXCollections.observableArrayList();
+        myDir = new File("./clientFiles");
+        File[] fileList = myDir.listFiles();
+        for (File entry : fileList) {
+            if (entry.isFile()) {
+                clientFiles.addAll(new Data(entry));
+            }
+            clientTable.setItems(clientFiles);
         }
     }
 
