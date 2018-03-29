@@ -11,6 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TablePosition;
 import java.io.*;
+import javafx.fxml.FXMLLoader;
 import javafx.event.EventHandler;
 import java.net.DatagramSocket;
 import java.net.Socket;
@@ -43,7 +44,7 @@ public class Client extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        //Parent root1 = FXMLLoader.load(getClass().getResource("sample.fxml"));
         //Lets first setup the design of the program
         Group layer = new Group();
         BorderPane layout = new BorderPane();
@@ -62,7 +63,7 @@ public class Client extends Application {
         //Setting up TableView/Column for Client (left side)
         clientTable = new TableView<>();
         clientCol = new TableColumn<>();
-        clientCol.setCellValueFactory(new PropertyValueFactory<>("--"));
+        clientCol.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         clientCol.setMinWidth(300);
         clientTable.getColumns().addAll(clientCol);
 
@@ -71,11 +72,11 @@ public class Client extends Application {
         //Setting up TableView/Column for Server (right side)
         serverTable = new TableView<>();
         serverCol = new TableColumn<>();
-        serverCol.setCellValueFactory(new PropertyValueFactory<>("--"));
+        serverCol.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         serverCol.setMinWidth(300);
         serverTable.getColumns().addAll(serverCol);
 
-        layout.setRight(clientTable);
+        layout.setRight(serverTable);
 
         //Button Commands for sending filename to the cell in server or client section
         //Upload Part
@@ -86,6 +87,22 @@ public class Client extends Application {
             TableColumn column = tablePosition.getTableColumn();
             String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
             System.out.println("You've selected:" + fileName);
+            serverConnect();
+            writer.println("UPLOADING" + fileName);
+            writer.flush();
+            String line;
+            try {
+                fileIn = new BufferedReader(new FileReader(myDir.getPath() + "/" + fileName));
+                while ((line = fileIn.readLine()) != null) {
+                    System.out.println("File content: " + line);
+                    writer.println(line);
+                    writer.flush();
+                }
+                writer.println("\0");
+                writer.flush();
+            }catch (IOException exception) {
+                exception.printStackTrace();
+            }
         });
 
         //Download Part
@@ -99,7 +116,7 @@ public class Client extends Application {
         });
 
         //Finish up the layout
-        layer.getChildren().addAll(layout);
+        layer.getChildren().add(layout);
 
         primaryStage.setTitle("SECRET MANGOS .TXT SHARER");
         Scene scene = new Scene(layer, 600, 500);
@@ -129,7 +146,7 @@ public class Client extends Application {
                 writer.flush();
                 System.out.println("testing linkage");
                 while ((fileName = reader.readLine()) != null) {
-                    if (fileName.equals("/0")) {
+                    if (fileName.equals("\0")) {
                         break;
                     }
                     serverFiles.add(new Data(fileName));
@@ -160,7 +177,7 @@ public class Client extends Application {
         File[] fileList = myDir.listFiles();
         for (File entry : fileList) {
             if (entry.isFile()) {
-                clientFiles.addAll(new Data(entry));
+                clientFiles.add(new Data(entry));
             }
             clientTable.setItems(clientFiles);
         }
@@ -168,7 +185,6 @@ public class Client extends Application {
 
     //main method
     public static void main(String[] args) {
-        cmdArgs = args;
         launch(args);
     }
 }
