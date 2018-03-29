@@ -1,4 +1,11 @@
+/*
+Syed Daniyal Shah - 100622173
+Mustafa Al-Azzawe - 100617392
+Assignment02 - Data.java
+ */
+
 package sample;
+
 import java.io.File;
 
 public class Data {

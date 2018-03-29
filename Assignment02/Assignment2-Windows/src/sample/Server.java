@@ -1,3 +1,9 @@
+/*
+Syed Daniyal Shah - 100622173
+Mustafa Al-Azzawe - 100617392
+Assignment02 - Server.java
+ */
+
 package sample;
 
 import java.io.*;
@@ -25,9 +31,9 @@ public class Server {
         try {
             serverSocket = new ServerSocket(9999);
             while (true) {
-                System.out.println("listening for fruits");
+                System.out.println("listening for fruits...");
                 clientSocket = serverSocket.accept();
-                System.out.println("connected to fruits");
+                System.out.println("connected to fruits...");
                 Thread thread = new Thread(new ClientConnectionHandler());
                 thread.start();
             }
@@ -52,7 +58,7 @@ public class Server {
                 String clientCommandTokens[] = clientCommand.split(" ");
                 for (int i = 0; i < clientCommandTokens.length; i++) {
                     String entry = clientCommandTokens[i];
-                    System.out.println("clientCommandTokens[" + i + "] = " + clientCommandTokens[i]);
+                    System.out.println("\nclientCommandTokens[" + i + "] = " + clientCommandTokens[i]);
                 }
                 if (clientCommandTokens[0].equals("DIR")) {
                     System.out.println("received command: " + clientCommandTokens[0]);
@@ -80,7 +86,7 @@ public class Server {
                 PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
                 //out.println("Heres a files list");
                 for (File entry : filesList) {
-                    System.out.println("entry.geName() = " + entry.getName());
+                    System.out.println("entry.geName() = " + entry.getName() + "\n");
                     writer.println(entry.getName());
                     writer.flush();
                     dataRecordArrayList.add(new Data(entry));
@@ -109,7 +115,7 @@ public class Server {
                     writer2.flush();
                 }
                 writer2.close();
-                System.out.println("file uploaded to mother fruits");
+                System.out.println("file uploaded to mother fruits!");
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
@@ -119,7 +125,7 @@ public class Server {
             int index = -1;
             System.out.println("fileName = " + fileName);
             for (Data entry : dataRecordArrayList) {
-                System.out.println("entry.getFileName() = " + entry.getFileName());
+                System.out.println("entry.getFileName() = " + entry.getFileName() + "\n");
                 if (entry.getFileName().equals(fileName)) {
                     System.out.println("found");
                     index = dataRecordArrayList.indexOf(entry);

@@ -1,8 +1,15 @@
-package sample;
+/*
+Syed Daniyal Shah - 100622173
+Mustafa Al-Azzawe - 100617392
+Assignment02 - Client.java
+ */
+ package sample;
 
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -10,10 +17,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TablePosition;
+
 import java.io.*;
 import java.net.Socket;
-import javafx.application.Application;
-import javafx.collections.ObservableList;
 
 
 public class Client extends Application {
@@ -73,7 +79,7 @@ public class Client extends Application {
             Data dataRecord = clientTable.getItems().get(row);
             TableColumn column = tablePosition.getTableColumn();
             String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
-            System.out.println("You've selected:" + fileName);
+            System.out.println("\nYou've selected: " + fileName);
             serverConnect();
             writer.println("UPLOADING" + fileName);
             writer.flush();
@@ -90,7 +96,7 @@ public class Client extends Application {
             }catch (IOException exception) {
                 exception.printStackTrace();
             }
-            System.out.println("File upload to mother fruit complete");
+            System.out.println("file upload to mother fruit complete!");
             if (!serverTable.getItems().contains(dataRecord)) {
                 serverTable.getItems().add(dataRecord);
             }
@@ -124,7 +130,7 @@ public class Client extends Application {
             Data dataRecord = serverTable.getItems().get(row);
             TableColumn column = tablePosition.getTableColumn();
             String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
-            System.out.println("You've selected:" + fileName);
+            System.out.println("\nYou've selected: " + fileName);
             writer.println("DOWNLOADING " + fileName);
             writer.flush();
             String line;
@@ -142,7 +148,7 @@ public class Client extends Application {
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
-            System.out.println("file download to fruit complete");
+            System.out.println("file download to fruit complete!");
             if (!clientTable.getItems().contains(dataRecord)) {
                 clientTable.getItems().add(dataRecord);
             }
@@ -151,7 +157,7 @@ public class Client extends Application {
         //Finish up the layout
         layer.getChildren().add(layout);
 
-        primaryStage.setTitle("SECRET MANGOS .TXT SHARER");
+        primaryStage.setTitle("SECRET MANGOS FILE SHARER");
         Scene scene = new Scene(layer, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -177,7 +183,7 @@ public class Client extends Application {
                 PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
                 writer.println("DIR");
                 writer.flush();
-                System.out.println("testing linkage");
+                System.out.println("testing linkage...");
                 while ((fileName = reader.readLine()) != null) {
                     if (fileName.equals("\0")) {
                         break;
