@@ -9,7 +9,7 @@ public class Server {
     private Socket clientSocket;
     private ServerSocket serverSocket;
     private File serverDirectory;
-    private ArrayList<Data> fileRecordArrayList;
+    private ArrayList<Data> dataRecordArrayList;
     private File[] filesList;
     BufferedReader fileIn;
 
@@ -19,7 +19,7 @@ public class Server {
 
     public void server() {
         //get files from server folder
-        serverDirectory = new File("./server");
+        serverDirectory = new File("./serverFiles");
 
         // start connection
         try {
@@ -35,119 +35,99 @@ public class Server {
             exception.printStackTrace();
         }
     }
+    //our connection handler for commmands via
     public class ClientConnectionHandler implements Runnable {
         @Override
         public void run() {
             getClientCommand();
         }
-        // Method to disconnect the client
-        private void disconnect() {
-            try {
-                clientSocket.close();
-                System.out.println("Disconnected client");
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        }
-        // Read in and interpret command from remote client
+
+        // command from server-client
         private synchronized void getClientCommand() {
             String clientCommand;
             try {
                 fileIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 clientCommand = fileIn.readLine();
+                //for command tokens
                 String clientCommandTokens[] = clientCommand.split(" ");
                 for (int i = 0; i < clientCommandTokens.length; i++) {
                     String entry = clientCommandTokens[i];
                     System.out.println("clientCommandTokens[" + i + "] = " + clientCommandTokens[i]);
                 }
                 if (clientCommandTokens[0].equals("DIR")) {
-                    System.out.println("Received command: " + clientCommandTokens[0]);
-                    sendFilesList();
-                }
-                else if (clientCommandTokens[0].equals("UPLOAD")) {
-                    System.out.println("Received command: " + clientCommandTokens[0]);
-                    receiveFile(clientCommandTokens[1]);
-                }
-                else if (clientCommandTokens[0].equals("DOWNLOAD")) {
-                    System.out.println("Received command: " + clientCommandTokens[0]);
-                    sendFile(clientCommandTokens[1]);
-                }
-                else {
-                    System.out.println("Unknown command");
-                    disconnect();
+                    System.out.println("received command: " + clientCommandTokens[0]);
+                    sendFilesDIR();
+                } else if (clientCommandTokens[0].equals("UPLOAD")) {
+                    System.out.println("received command: " + clientCommandTokens[0]);
+                    uploadFile(clientCommandTokens[1]);
+                } else if (clientCommandTokens[0].equals("DOWNLOAD")) {
+                    System.out.println("received command: " + clientCommandTokens[0]);
+                    downloadFile(clientCommandTokens[1]);
+                } else {
+                    System.out.println("unknown command");
+                    clientSocket.close();
                 }
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
-
-
         }
 
-        private synchronized void sendFilesList() {
-            // We put the files into an ArrayList so later if the client wants to download that file,
-            // we will check every entry of fileRecordArrayList to find the exact file
-            fileRecordArrayList = new ArrayList<>();
+        private synchronized void sendFilesDIR() {
+            // put it in array, for "DIR"
+            dataRecordArrayList = new ArrayList<>();
             filesList = serverDirectory.listFiles();
             try {
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
+                PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
                 //out.println("Heres a files list");
                 for (File entry : filesList) {
                     System.out.println("entry.geName() = " + entry.getName());
-                    out.println(entry.getName());
-                    out.flush();
-                    fileRecordArrayList.add(new Data(entry));
+                    writer.println(entry.getName());
+                    writer.flush();
+                    dataRecordArrayList.add(new Data(entry));
                 }
-                out.println("\0");
-                out.flush();
+                writer.println("\0");
+                writer.flush();
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
-            disconnect();
-
         }
 
-        private synchronized void receiveFile(String fileName) {
-            System.out.println("Attempting to receive filename: " + fileName);
+        private synchronized void uploadFile(String fileName) {
+            System.out.println("getting file name " + fileName);
             File receiveFile = new File(serverDirectory.getPath() + "/" + fileName);
-            System.out.println("File created: " + serverDirectory.getPath() + "/" + fileName);
+            System.out.println("file made " + serverDirectory.getPath() + "/" + fileName);
             String line;
             try {
-                PrintWriter fout = new PrintWriter(receiveFile);
-                //BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                PrintWriter writer2 = new PrintWriter(receiveFile);
+                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 while ((line = fileIn.readLine()) != null) {
                     if (line.equals("\0")) {
                         break;
                     }
-                    System.out.println("File content: " + line);
-                    fout.println(line);
-                    fout.flush();
-                    //System.out.println("Line printed successfully");
+                    System.out.println("your file says: " + line);
+                    writer2.println(line);
+                    writer2.flush();
                 }
-                fout.close();
-                System.out.println("File successfully uploaded");
-            } catch (IOException e) {
-                e.printStackTrace();
+                writer2.close();
+                System.out.println("file uploaded to mother fruits");
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
-            disconnect();
-
-
         }
-        private synchronized void sendFile(String fileName) {
-            // Search the arraylist of files that we recorded in the server directory to make sure the file exists
-            // to send to the client
+
+        private synchronized void downloadFile(String fileName) {
             int index = -1;
             System.out.println("fileName = " + fileName);
-            for (Data entry : fileRecordArrayList) {
+            for (Data entry : dataRecordArrayList) {
                 System.out.println("entry.getFileName() = " + entry.getFileName());
                 if (entry.getFileName().equals(fileName)) {
-                    System.out.println("We have a match!");
-                    index = fileRecordArrayList.indexOf(entry);
+                    System.out.println("found");
+                    index = dataRecordArrayList.indexOf(entry);
                 }
             }
             String line;
-
             try {
-                fileIn = new BufferedReader(new FileReader(serverDirectory + "/" + fileRecordArrayList.get(index).getFileName()));
+                fileIn = new BufferedReader(new FileReader(serverDirectory + "/" + dataRecordArrayList.get(index).getFileName()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream());
                 while ((line = fileIn.readLine()) != null) {
                     out.println(line);
@@ -155,8 +135,6 @@ public class Server {
                 }
                 out.println("\0");
                 out.flush();
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -164,6 +142,9 @@ public class Server {
         }
 
     }
-
 }
+
+
+
+
 

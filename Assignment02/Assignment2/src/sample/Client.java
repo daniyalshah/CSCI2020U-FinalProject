@@ -11,19 +11,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.scene.control.TablePosition;
 import java.io.*;
-import javafx.fxml.FXMLLoader;
-import javafx.event.EventHandler;
-import java.net.DatagramSocket;
 import java.net.Socket;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import net.miginfocom.layout.Grid;
-import org.apache.commons.httpclient.util.IdleConnectionHandler;
 
 
 public class Client extends Application {
@@ -61,7 +51,7 @@ public class Client extends Application {
         clientTable = new TableView<>();
         clientCol = new TableColumn<>();
         clientCol.setCellValueFactory(new PropertyValueFactory<>("fileName"));
-        clientCol.setMinWidth(300);
+        clientCol.setMinWidth(250);
         clientTable.getColumns().addAll(clientCol);
 
         layout.setLeft(clientTable);
@@ -70,7 +60,7 @@ public class Client extends Application {
         serverTable = new TableView<>();
         serverCol = new TableColumn<>();
         serverCol.setCellValueFactory(new PropertyValueFactory<>("fileName"));
-        serverCol.setMinWidth(300);
+        serverCol.setMinWidth(250);
         serverTable.getColumns().addAll(serverCol);
 
         layout.setRight(serverTable);
@@ -91,7 +81,7 @@ public class Client extends Application {
             try {
                 fileIn = new BufferedReader(new FileReader(myDir.getPath() + "/" + fileName));
                 while ((line = fileIn.readLine()) != null) {
-                    System.out.println("Ignore this Line: File line " + line);
+                    System.out.println("This file says " + line);
                     writer.println(line);
                     writer.flush();
                 }
@@ -104,6 +94,27 @@ public class Client extends Application {
             if (!serverTable.getItems().contains(dataRecord)) {
                 serverTable.getItems().add(dataRecord);
             }
+            /*
+            File fileOut = new File(myDir.getPath() + "/" + fileName);
+            try {
+                writer1 = new PrintWriter(fileOut);
+                reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                while ((line = reader.readLine()) !=null) {
+                    if (line.equals("\0")) {
+                        break;
+                    }
+                    writer1.println();
+                }
+                writer1.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+
+            System.out.println("File upload to mother fruit complete");
+            if (!serverTable.getItems().contains(dataRecord)) {
+                serverTable.getItems().add(dataRecord);
+            }
+            */
         });
 
         //Download Part
@@ -141,18 +152,18 @@ public class Client extends Application {
         layer.getChildren().add(layout);
 
         primaryStage.setTitle("SECRET MANGOS .TXT SHARER");
-        Scene scene = new Scene(layer, 600, 500);
+        Scene scene = new Scene(layer, 500, 400);
         primaryStage.setScene(scene);
         primaryStage.show();
 
         //Start everything
         serverConnect();
-        ConnectionHandler conectionHandler = new ConnectionHandler();
-        Thread thread = new Thread(conectionHandler);
+        ConnectionHandler connectionHandler = new ConnectionHandler();
+        Thread thread = new Thread(connectionHandler);
         thread.start();
         getClientFiles();
-
     }
+
     //Get server files to the right side
     public class ConnectionHandler implements Runnable {
         @Override
@@ -164,7 +175,7 @@ public class Client extends Application {
             String fileName;
             try {
                 PrintWriter writer = new PrintWriter(clientSocket.getOutputStream());
-                writer.println("DIRECTORY");
+                writer.println("DIR");
                 writer.flush();
                 System.out.println("testing linkage");
                 while ((fileName = reader.readLine()) != null) {
