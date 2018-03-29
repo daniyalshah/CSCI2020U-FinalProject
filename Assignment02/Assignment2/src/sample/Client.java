@@ -39,9 +39,6 @@ public class Client extends Application {
     private BufferedReader fileIn;
     private ConnectionHandler connectionHandler;
 
-
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
         //Parent root1 = FXMLLoader.load(getClass().getResource("sample.fxml"));
@@ -94,7 +91,7 @@ public class Client extends Application {
             try {
                 fileIn = new BufferedReader(new FileReader(myDir.getPath() + "/" + fileName));
                 while ((line = fileIn.readLine()) != null) {
-                    System.out.println("File content: " + line);
+                    System.out.println("Ignore this Line: File line " + line);
                     writer.println(line);
                     writer.flush();
                 }
@@ -102,6 +99,10 @@ public class Client extends Application {
                 writer.flush();
             }catch (IOException exception) {
                 exception.printStackTrace();
+            }
+            System.out.println("File upload to mother fruit complete");
+            if (!serverTable.getItems().contains(dataRecord)) {
+                serverTable.getItems().add(dataRecord);
             }
         });
 
@@ -113,6 +114,27 @@ public class Client extends Application {
             TableColumn column = tablePosition.getTableColumn();
             String fileName = (String) column.getCellObservableValue(dataRecord).getValue();
             System.out.println("You've selected:" + fileName);
+            writer.println("DOWNLOADING " + fileName);
+            writer.flush();
+            String line;
+            File fileOut = new File(myDir.getPath() + "/" + fileName);
+            try {
+                writer1 = new PrintWriter(fileOut);
+                reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                while ((line = reader.readLine()) != null ) {
+                    if (line.equals("\0")) {
+                        break;
+                    }
+                    writer1.println(line);
+                }
+                writer1.close();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            System.out.println("file download to fruit complete");
+            if (!clientTable.getItems().contains(dataRecord)) {
+                clientTable.getItems().add(dataRecord);
+            }
         });
 
         //Finish up the layout
@@ -164,7 +186,7 @@ public class Client extends Application {
             clientSocket = new Socket("localhost", 9999);
             reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             writer = new PrintWriter(clientSocket.getOutputStream());
-            System.out.println("Connected to server");
+            System.out.println("connected to server");
         } catch (IOException exception) {
             exception.printStackTrace();
         }
