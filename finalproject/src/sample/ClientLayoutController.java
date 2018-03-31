@@ -6,6 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,10 +20,18 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Cell;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.Scene;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class ClientLayoutController implements Initializable {
 
@@ -34,19 +48,10 @@ public class ClientLayoutController implements Initializable {
     private BufferedReader input = null;
     private BufferedWriter output = null;
 
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         listViewMessages.setItems(sendMessageData);
-
-
     }
-
-
-
-
 
     @FXML
     private void handleConnectionButton(){
@@ -59,18 +64,13 @@ public class ClientLayoutController implements Initializable {
             output.flush();
             sendMessageData.add("ready for connection");
 
-
-
         } catch (IOException e) {
             System.out.println("unable to connect");
             //e.printStackTrace();
         }
 
         Thread thread = new Thread(() -> {
-
-
             try {
-
                 while(true){ //input.ready()
 
                     //sendMessageData.add("thread started");
@@ -83,14 +83,10 @@ public class ClientLayoutController implements Initializable {
                     }
                 }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         });
         thread.start();
-
-
-
     }
 
     @FXML
@@ -106,6 +102,26 @@ public class ClientLayoutController implements Initializable {
 
     }
 
-
-
+    @FXML
+    private void handleFileShareBuuton(ActionEvent event) throws IOException{
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Open a Picture");
+        //fc.setInitialDirectory(new File("."));
+        //fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("", ""));
+        File file = fc.showOpenDialog(Client.primaryStage);
+        if (file != null) {
+            //imageFiles.setAll(load(file.toPath()));
+        }
+    }
+/*
+    private List<Path> load(Path directory) {
+        List<Path> files = new ArrayList<>();
+        try {
+            Files.newDirectoryStream(directory, "*.{jpg,jpeg,png,JPG,JPEG,PNG}").forEach(file -> files.add(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return files;
+    }
+*/
 }

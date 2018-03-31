@@ -17,7 +17,7 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" text="Exit" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -37,12 +37,12 @@
                 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" SplitPane.resizableWithParent="false" />
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="333.0" prefWidth="479.0">
                     <children>
-                        <ListView fx:id="listViewMessages" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="320.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="listViewMessages" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children></AnchorPane>
             </items>
         </SplitPane>
         <TextField fx:id="textFieldSend" layoutX="492.0" layoutY="533.0" prefHeight="26.0" prefWidth="200.0" promptText="Type a message" AnchorPane.leftAnchor="492.0" />
-        <Button layoutX="699.0" layoutY="533.0" mnemonicParsing="false" onAction="#handleSendMessageBuuton" text="Send" />
+        <Button defaultButton="true" layoutX="699.0" layoutY="533.0" mnemonicParsing="false" onAction="#handleSendMessageBuuton" text="Send" />
         <Button layoutX="14.0" layoutY="533.0" mnemonicParsing="false" onAction="#handleConnectionButton" text="Connect" />
         <TextField fx:id="textFieldName" layoutX="385.0" layoutY="533.0" prefHeight="26.0" prefWidth="100.0" promptText="Username" />
         <ImageView fitHeight="26.0" fitWidth="40.0" layoutX="348.0" layoutY="533.0" pickOnBounds="true" preserveRatio="true">
@@ -50,7 +50,7 @@
                 <Image url="@../images/mango.png" />
             </image>
         </ImageView>
-      <Button layoutX="756.0" layoutY="533.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleSendMessageBuuton" prefHeight="27.0" prefWidth="50.0">
+      <Button fx:id="shareFile" layoutX="756.0" layoutY="533.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleFileShareBuuton" prefHeight="27.0" prefWidth="50.0">
         <graphic>
             <ImageView fitHeight="19.0" fitWidth="43.0">
                 <image>

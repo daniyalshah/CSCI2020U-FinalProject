@@ -5,8 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import sample.ClientLayoutController;
 
 public class Client extends Application {
+
+    public static Stage primaryStage;
 
     @Override
     public void start(Stage primaryStage) {
