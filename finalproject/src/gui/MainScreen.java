@@ -1,5 +1,6 @@
 package gui;
 
+import chatclient.ClientLayoutController;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,7 +8,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
-import physicsfx.PhysicsFX;
+import chatclient.Client;
+//import physicsfx.PhysicsFX;
 
 
 public class MainScreen extends BorderPane {
@@ -16,10 +18,10 @@ public class MainScreen extends BorderPane {
     private Timeline gameLoop;
 
     //main variables
-    private final PhysicsFX main;
+    private final ClientLayoutController main;
     private final DrawScreen center;
 
-    public MainScreen(PhysicsFX main) {
+    public MainScreen(ClientLayoutController main) {
         this.main = main;
         this.center = new DrawScreen();
         setCenter();
@@ -27,6 +29,7 @@ public class MainScreen extends BorderPane {
     }
 
     private void setCenter() {
+
         this.setCenter(center);
     }
 

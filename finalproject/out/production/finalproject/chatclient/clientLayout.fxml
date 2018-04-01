@@ -11,7 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="500.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chatclient.ClientLayoutController">
+<AnchorPane prefHeight="500.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chatclient.ClientLayoutController">
     <children>
         <MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="400.0" AnchorPane.bottomAnchor="377.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
@@ -25,7 +25,10 @@
         </MenuBar>
         <SplitPane dividerPositions="0.2915" layoutX="121.0" layoutY="85.0" prefHeight="335.0" prefWidth="500.0" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
             <items>
-                <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" SplitPane.resizableWithParent="false" />
+                <AnchorPane fx:id="rootPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Button layoutX="95.0" layoutY="210.0" mnemonicParsing="false" onAction="#loadSecond" prefHeight="26.0" prefWidth="317.0" text="Button" />
+               </children></AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="333.0" prefWidth="479.0">
                     <children>
                         <ListView fx:id="listViewMessages" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

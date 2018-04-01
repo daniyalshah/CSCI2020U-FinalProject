@@ -26,8 +26,8 @@ public class DrawScreen extends Canvas {
     }
 
     private void init() {
-        this.setWidth(1920);
-        this.setHeight(1000);
+        this.setWidth(500);
+        this.setHeight(500);
         gtx = this.getGraphicsContext2D();
     }
 
