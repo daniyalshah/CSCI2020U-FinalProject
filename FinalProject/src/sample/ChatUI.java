@@ -37,6 +37,7 @@ public class ChatUI extends VBox {
     private final Button btnSend;
     private final ImageView sendImage;
     private final ImageView mangoImage;
+    //private final ImageView imageView1;
     private final Button btnDisconnect;
 
     public ChatUI(Client client) {
@@ -49,6 +50,7 @@ public class ChatUI extends VBox {
         btnSend = new Button();
         sendImage = new ImageView();
         mangoImage = new ImageView();
+        //imageView1 = new ImageView();
         btnDisconnect = new Button();
 
         setMaxHeight(USE_PREF_SIZE);
@@ -57,7 +59,7 @@ public class ChatUI extends VBox {
         setMinWidth(USE_PREF_SIZE);
         setPrefHeight(450.0);
         setPrefWidth(705.0);
-        setStyle("-fx-background-color: #585858;");
+        setStyle("-fx-background-color: #23262E;");
 
         VBox.setVgrow(splitPane, javafx.scene.layout.Priority.ALWAYS);
         splitPane.setDividerPositions(0.2505567928730512);
@@ -76,6 +78,16 @@ public class ChatUI extends VBox {
         particlePane.setMinWidth(USE_PREF_SIZE);
         particlePane.setPrefHeight(400.0);
         particlePane.setPrefWidth(400.0);
+
+        /*
+        imageView1.setFitHeight(150.0);
+        imageView1.setFitWidth(200.0);
+        imageView1.setLayoutX(100.0);
+        imageView1.setLayoutY(125.0);
+        imageView1.setPickOnBounds(true);
+        imageView1.setPreserveRatio(true);
+        imageView1.setImage(new Image(getClass().getResource("../images/Peach.png").toExternalForm()));
+        */
 
         SplitPane.setResizableWithParent(chatPane, false);
         chatPane.setMaxHeight(USE_PREF_SIZE);
@@ -112,7 +124,7 @@ public class ChatUI extends VBox {
         btnSend.setMnemonicParsing(false);
         btnSend.setPrefHeight(26.0);
         btnSend.setPrefWidth(50.0);
-        btnSend.setStyle("-fx-background-radius: 30px; -fx-background-color: #DB8D2E;");
+        btnSend.setStyle("-fx-background-radius: 30px; -fx-background-color: #FF8696;");
         btnSend.setTranslateX(645.0);
         btnSend.setTranslateY(-14.0);
         btnSend.setFont(new Font(12.0));
@@ -147,7 +159,7 @@ public class ChatUI extends VBox {
         btnDisconnect.setMnemonicParsing(false);
         btnDisconnect.setPrefHeight(26.0);
         btnDisconnect.setPrefWidth(90.0);
-        btnDisconnect.setStyle("-fx-background-radius: 15px; -fx-background-color: #DB8D2E;");
+        btnDisconnect.setStyle("-fx-background-radius: 15px; -fx-background-color: #FF8696;");
         btnDisconnect.setText("Disconnect");
         btnDisconnect.setTextFill(javafx.scene.paint.Color.valueOf("#e4e4e4"));
         btnDisconnect.setTranslateX(10.0);
@@ -166,6 +178,7 @@ public class ChatUI extends VBox {
         MainScreen particle = new MainScreen(client);
 
         particlePane.getChildren().add(particle);
+        //particlePane.getChildren().add(imageView1);
         splitPane.getItems().add(particlePane);
         chatPane.getChildren().add(chatListView);
         splitPane.getItems().add(chatPane);
