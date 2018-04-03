@@ -4,13 +4,12 @@ Repository Link: https://github.com/mustafalazzawe/csci2020u_mangos/tree/master/
 
 Enjoy chatting with friends while experimenting a new type of "chill".
 
-# Group Members:
+## Group Members:
 
--Syed Daniyal Shah
--Mustafa Alazzawe
--Shane Rego
+Syed Daniyal Shah,
+Mustafa Alazzawe, & Shane Rego
 
-# Contributions
+## Contributions
 
 Syed Daniyal Shah -
 
@@ -18,7 +17,7 @@ Mustafa Alazzawe -
 
 Shane Rego - 
 
-# How To Use
+## How To Use
 
 - Program will have to be downloaded and compiled with IntelliJ
 - Debug/run the Server file, then Debug/run the Client file
