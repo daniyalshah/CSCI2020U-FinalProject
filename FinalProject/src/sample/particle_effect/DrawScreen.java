@@ -1,3 +1,11 @@
+/*
+ * Final Project 2020 - Particle effect
+ * Group Members -
+ * Syed Daniyal Shah
+ * Mustafa Al-Azzawe
+ * Shane Rego
+ */
+
 package sample.particle_effect;
 
 import javafx.scene.canvas.Canvas;

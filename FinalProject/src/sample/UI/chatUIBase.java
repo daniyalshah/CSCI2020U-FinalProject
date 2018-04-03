@@ -1,4 +1,12 @@
-package sample;
+/*
+ * Final Project 2020 - Program UI
+ * Group Members -
+ * Mustafa Al-Azzawe
+ * Syed Daniyal Shah
+ * Shane Rego
+ */
+
+package sample.UI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,32 +33,39 @@ import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
+import sample.client.Client;
 import sample.particle_effect.MainScreen;
+//import sample.tictactoe.TicTacToe;
 
-public class ChatUI extends VBox {
+public class chatUIBase extends VBox {
 
     private final SplitPane splitPane;
     private final AnchorPane particlePane;
+    //private final Button loadGame;
+    //private final Button loadParticle;
     private final AnchorPane chatPane;
     private final ListView chatListView;
     private final TextField chatTextField;
     private final Button btnSend;
     private final ImageView sendImage;
     private final ImageView mangoImage;
-    //private final ImageView imageView1;
     private final Button btnDisconnect;
 
-    public ChatUI(Client client) {
+    public chatUIBase(Client client) {
+
+        MainScreen particle = new MainScreen(client);
+        //TicTacToe game = new TicTacToe();
 
         splitPane = new SplitPane();
         particlePane = new AnchorPane();
+        //loadGame = new Button();
+        //loadParticle = new Button();
         chatPane = new AnchorPane();
         chatListView = new ListView<String>();
         chatTextField = new TextField();
         btnSend = new Button();
         sendImage = new ImageView();
         mangoImage = new ImageView();
-        //imageView1 = new ImageView();
         btnDisconnect = new Button();
 
         setMaxHeight(USE_PREF_SIZE);
@@ -80,13 +95,37 @@ public class ChatUI extends VBox {
         particlePane.setPrefWidth(400.0);
 
         /*
-        imageView1.setFitHeight(150.0);
-        imageView1.setFitWidth(200.0);
-        imageView1.setLayoutX(100.0);
-        imageView1.setLayoutY(125.0);
-        imageView1.setPickOnBounds(true);
-        imageView1.setPreserveRatio(true);
-        imageView1.setImage(new Image(getClass().getResource("../images/Peach.png").toExternalForm()));
+        loadGame.setLayoutX(79.0);
+        loadGame.setLayoutY(201.0);
+        loadGame.setMnemonicParsing(false);
+        loadGame.setStyle("-fx-background-color: #FF8696; -fx-background-radius: 30px;");
+        loadGame.setText("Play Game");
+        loadGame.setTextFill(javafx.scene.paint.Color.valueOf("#e4e4e4"));
+        loadGame.setFont(new Font(14.0));
+        loadGame.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent Event) {
+                particlePane.getChildren().add(game);
+            }
+
+        });
+        */
+
+        /*
+        loadParticle.setLayoutX(200.0);
+        loadParticle.setLayoutY(201.0);
+        loadParticle.setMnemonicParsing(false);
+        loadParticle.setStyle("-fx-background-color: #FF8696; -fx-background-radius: 30px;");
+        loadParticle.setText("Chill Particle");
+        loadParticle.setTextFill(javafx.scene.paint.Color.valueOf("#e4e4e4"));
+        loadParticle.setFont(new Font(14.0));
+        loadParticle.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent Event) {
+                particlePane.getChildren().add(particle);
+            }
+
+        });
         */
 
         SplitPane.setResizableWithParent(chatPane, false);
@@ -141,7 +180,7 @@ public class ChatUI extends VBox {
         sendImage.setFitWidth(40.0);
         sendImage.setPickOnBounds(true);
         sendImage.setPreserveRatio(true);
-        sendImage.setImage(new Image(getClass().getResource("../images/send.png").toExternalForm()));
+        sendImage.setImage(new Image(getClass().getResource("../../images/send.png").toExternalForm()));
         btnSend.setGraphic(sendImage);
 
         mangoImage.setFitHeight(26.0);
@@ -150,7 +189,7 @@ public class ChatUI extends VBox {
         mangoImage.setPreserveRatio(true);
         mangoImage.setTranslateX(370.0);
         mangoImage.setTranslateY(-40.0);
-        mangoImage.setImage(new Image(getClass().getResource("../images/Peach.png").toExternalForm()));
+        mangoImage.setImage(new Image(getClass().getResource("../../images/Peach.png").toExternalForm()));
 
         btnDisconnect.setMaxHeight(USE_PREF_SIZE);
         btnDisconnect.setMaxWidth(USE_PREF_SIZE);
@@ -175,10 +214,9 @@ public class ChatUI extends VBox {
             }
         });
 
-        MainScreen particle = new MainScreen(client);
-
+        //particlePane.getChildren().add(loadGame);
+        //particlePane.getChildren().add(loadParticle);
         particlePane.getChildren().add(particle);
-        //particlePane.getChildren().add(imageView1);
         splitPane.getItems().add(particlePane);
         chatPane.getChildren().add(chatListView);
         splitPane.getItems().add(chatPane);

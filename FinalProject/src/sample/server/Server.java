@@ -1,4 +1,12 @@
-package sample;
+/*
+ * Final Project 2020 - Server Client
+ * Group Members -
+ * Shane Rego
+ * Mustafa Al-Azzawe
+ * Syed Daniyal Shah
+ */
+
+package sample.server;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;

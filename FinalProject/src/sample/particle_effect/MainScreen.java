@@ -1,3 +1,11 @@
+/*
+ * Final Project 2020 - Particle effect
+ * Group Members -
+ * Syed Daniyal Shah
+ * Mustafa Al-Azzawe
+ * Shane Rego
+ */
+
 package sample.particle_effect;
 
 import javafx.animation.Animation;
@@ -8,9 +16,7 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Duration;
 
-import sample.Client;
-import sample.ClientApp;
-import sample.ChatUI;
+import sample.client.Client;
 
 public class MainScreen extends BorderPane {
 

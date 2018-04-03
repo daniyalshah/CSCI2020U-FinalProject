@@ -1,4 +1,13 @@
-package sample;
+/*
+* Final Project 2020 - Chat Client
+* Group Members -
+* Mustafa Al-Azzawe
+* Syed Daniyal Shah
+* Shane Rego
+*/
+
+package sample.client;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
