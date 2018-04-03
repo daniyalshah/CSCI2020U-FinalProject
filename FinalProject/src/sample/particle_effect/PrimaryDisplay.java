@@ -18,33 +18,31 @@ import javafx.util.Duration;
 
 import sample.client.Client;
 
-public class MainScreen extends BorderPane {
+public class PrimaryDisplay extends BorderPane {
 
     //animation variables
     private Timeline gameLoop;
 
     //main variables
     private final Client client;
-    private final DrawScreen center;
+    private final ParticleSc particleCent;
 
-    public MainScreen(Client client) {
+    public PrimaryDisplay(Client client) {
         this.client = client;
-        this.center = new DrawScreen();
+        this.particleCent = new ParticleSc();
         setCenter();
         runGameLoop();
     }
 
     private void setCenter() {
-        this.setCenter(center);
+        this.setCenter(particleCent);
     }
 
     private void runGameLoop() {
         EventHandler<ActionEvent> gameUpdate = event -> {
-            center.update();
-            center.draw();
+            particleCent.update();
+            particleCent.draw();
         };
-        //center.update();
-        //center.draw();
         gameLoop = new Timeline(new KeyFrame(Duration.millis(33.3), gameUpdate));
         gameLoop.setCycleCount(Animation.INDEFINITE);
         gameLoop.play();

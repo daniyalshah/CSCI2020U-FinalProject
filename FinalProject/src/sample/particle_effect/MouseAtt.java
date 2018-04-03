@@ -11,28 +11,28 @@ package sample.particle_effect;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class Attractor {
+public class MouseAtt {
 
-    private final Vector pos;
+    private final Vector positions;
 
-    public Attractor(double x, double y) {
-        pos = new Vector(x, y);
+    public MouseAtt(double x, double y) {
+        positions = new Vector(x, y);
     }
 
-    public Vector getPos() {
-        return pos;
+    public Vector getPositions() {
+        return positions;
     }
 
     public void setX(double x) {
-        this.pos.setX(x);
+        this.positions.setX(x);
     }
 
     public void setY(double y) {
-        this.pos.setY(y);
+        this.positions.setY(y);
     }
 
     public void draw(GraphicsContext gtx) {
         gtx.setFill(Color.LIGHTPINK);
-        gtx.fillOval(pos.getX(), pos.getY(), 5, 5);
+        gtx.fillOval(positions.getX(), positions.getY(), 5, 5);
     }
 }

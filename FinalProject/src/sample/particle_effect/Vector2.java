@@ -8,7 +8,7 @@
 
 package sample.particle_effect;
 
-public class Vec {
+public class Vector2 {
 
     public static Vector sub(Vector v1, Vector v2) {
         return new Vector(v1.getX() - v2.getX(), v1.getY() - v2.getY());

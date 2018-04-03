@@ -8,33 +8,20 @@
 
 package sample.UI;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import sample.client.Client;
-import sample.particle_effect.MainScreen;
+import sample.particle_effect.PrimaryDisplay;
 //import sample.tictactoe.TicTacToe;
 
 public class chatUIBase extends VBox {
@@ -53,7 +40,7 @@ public class chatUIBase extends VBox {
 
     public chatUIBase(Client client) {
 
-        MainScreen particle = new MainScreen(client);
+        PrimaryDisplay particle = new PrimaryDisplay(client);
         //TicTacToe game = new TicTacToe();
 
         splitPane = new SplitPane();

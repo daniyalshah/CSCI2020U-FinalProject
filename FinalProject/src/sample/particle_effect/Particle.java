@@ -15,44 +15,44 @@ import javafx.stage.Screen;
 
 public class Particle {
 
-    private final double G = 250;
-    private final double vel_strength = 1;
+    private final double particleForce = 350;
+    private final double vectorStr = 1;
 
-    private final Attractor attractor;
-    private final Vector pos;
+    private final MouseAtt mouseAtt;
+    private final Vector positionP;
     private Vector vel;
 
-    private Vector acc = new Vector(0, 0);
+    private Vector vecc = new Vector(0, 0);
 
-    public Particle(double x, double y, Attractor attractor) {
-        pos = new Vector(x, y);
-        this.attractor = attractor;
+    public Particle(double x, double y, MouseAtt mouseAtt) {
+        positionP = new Vector(x, y);
+        this.mouseAtt = mouseAtt;
         detVel();
     }
 
     private void detVel(){
-        this.vel = new Vector(Math.random() * vel_strength * 2 - vel_strength, Math.random() * vel_strength * 2 - vel_strength);
+        this.vel = new Vector(Math.random() * vectorStr * 2 - vectorStr, Math.random() * vectorStr * 2 - vectorStr);
     }
 
-    public Vector getPos() {
-        return pos;
+    public Vector getPositionP() {
+        return positionP;
     }
 
     public void setX(double x) {
-        this.pos.setX(x);
+        this.positionP.setX(x);
     }
 
     public void setY(double y) {
-        this.pos.setY(y);
+        this.positionP.setY(y);
     }
 
     public void attracted() {
-        Vector dir = Vec.sub(attractor.getPos(), pos);
+        Vector dir = Vector2.sub(mouseAtt.getPositions(), positionP);
         double dsquared = dir.magSq();
         dsquared = constrain(dsquared, 100, 400);
-        double strength = G / dsquared;
+        double strength = particleForce / dsquared;
         dir.setMag(strength);
-        this.acc = dir;
+        this.vecc = dir;
     }
 
     private double constrain(double getal, double min, double max) {
@@ -66,35 +66,31 @@ public class Particle {
     }
 
     public void update() {
-        pos.add(vel);
+        positionP.add(vel);
 
         Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
-        if(pos.getX() <= 20){
-            //pos.setX(20);
+        if(positionP.getX() <= 20){
             vel.touchObject();
         }
 
-        if(pos.getX() >= primaryScreenBounds.getWidth() - 20){
-            //pos.setX(primaryScreenBounds.getWidth() - 20);
+        if(positionP.getX() >= primaryScreenBounds.getWidth() - 20){
             vel.touchObject();
         }
 
-        if(pos.getY() <= 20){
-            //pos.setY(20);
+        if(positionP.getY() <= 20){
             vel.touchObject();
         }
 
-        if(pos.getY() >= primaryScreenBounds.getHeight() - 50){
-            //pos.setY(primaryScreenBounds.getHeight() - 50);
+        if(positionP.getY() >= primaryScreenBounds.getHeight() - 50){
             vel.touchObject();
         }
 
-        vel.add(acc);
+        vel.add(vecc);
         attracted();
     }
 
     public void draw(GraphicsContext gtx) {
         gtx.setFill(Color.rgb(255, 134, 150, 1));
-        gtx.fillOval(this.pos.getX(), this.pos.getY(), 2, 2);
+        gtx.fillOval(this.positionP.getX(), this.positionP.getY(), 2, 2);
     }
 }

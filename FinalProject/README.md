@@ -1,4 +1,4 @@
-# Final Project For CSCI2020u - Mangos Chat
+# Final Project For CSCI2020U - Mangos Chat
 
 Repository Link: https://github.com/mustafalazzawe/csci2020u_mangos/tree/master/FinalProject
 
