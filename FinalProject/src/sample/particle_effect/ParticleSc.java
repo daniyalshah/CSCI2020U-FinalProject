@@ -89,8 +89,6 @@ public class ParticleSc extends Canvas {
         });
 
         mouseAtt.draw(graphicsCon);
-
-        //graphicsCon.fillText("moose u a bean: " + amountOfPar, 20, 50);
     }
 
     public void update() {
